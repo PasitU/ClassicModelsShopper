@@ -14,7 +14,9 @@ import lombok.Setter;
 @Getter
 @NamedQueries({
         @NamedQuery(name = "PRODUCT_GETALL", query = "SELECT p FROM Product p"),
-        @NamedQuery(name = "PRODUCT_GETTOTALPRODUCTS", query = "SELECT COUNT(*) FROM Product p")
+        @NamedQuery(name = "PRODUCT_GETTOTALPRODUCTS", query = "SELECT COUNT(*) FROM Product p"),
+        @NamedQuery(name = "PRODUCT_GETBYPRICERNG", query = "SELECT p FROM Product p WHERE MSRP BETWEEN :basePrice AND :maxPrice"),
+        @NamedQuery(name = "PRODUCT_GETTOTALBYPRICERNG", query = "SELECT count(*) FROM Product p WHERE MSRP BETWEEN :basePrice AND :maxPrice")
 })
 public class Product {
     @Id

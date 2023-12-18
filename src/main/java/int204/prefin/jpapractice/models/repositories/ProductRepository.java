@@ -33,6 +33,22 @@ public class ProductRepository {
         return getAll.getResultList();
     }
 
+    public List<Product> getProductByPage(int page, int size, String basePrice, String maxPrice){
+        EntityManager em = getEntityManager();
+        if(page <= 0){
+            page = 1;
+        }
+        Query getAll = em.createNamedQuery("PRODUCT_GETBYPRICERNG").setParameter("basePrice",basePrice).setParameter("maxPrice", maxPrice);
+        getAll.setFirstResult(((page-1) * size));
+        getAll.setMaxResults(size);
+        return getAll.getResultList();
+    }
+
+    public int getTotalPagesWRng(String basePrice, String maxPrice){
+        EntityManager em = getEntityManager();
+        return (em.createNamedQuery("PRODUCT_GETBYPRICERNG").setParameter("basePrice",basePrice).setParameter("maxPrice", maxPrice).getResultList()).size();
+    }
+
     public Product findProduct(String code){
         EntityManager em = getEntityManager();
         return em.find(Product.class, code);

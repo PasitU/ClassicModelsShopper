@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "ProductToCartServlet", value = "/AddProduct")
 public class ProductToCartServlet extends HttpServlet {
@@ -37,7 +38,11 @@ public class ProductToCartServlet extends HttpServlet {
         if(size != null){
             sizeNum = Integer.parseInt(size);
         }
-        request.setAttribute("totalPage", pr.getTotalPages()/sizeNum + (pr.getTotalPages()%sizeNum != 0 ? 1 : 0));
+        String basePrice = request.getParameter("basePrice");
+        String maxPrice = request.getParameter("maxPrice");
+        if(basePrice != null || maxPrice != null){
+            List<Product> productsList = pr.getProductByPage(pageNum, sizeNum);
+        }
         request.setAttribute("productList", pr.getProductByPage(pageNum, sizeNum));
         request.setAttribute("currentPage", pageNum);
         request.setAttribute("currentSize", sizeNum);
